@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>
+Map Box - Web App
+</title>
+
+    <!-- Default Map Box CSS -->
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
+
+    <!-- Main Styles CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    <!-- Mapbox GL JS -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
+
+    <!-- Main App JS -->
+    <script type="text/javascript" src="{{ url_for('static', filename='js/app.js') }}"></script>
+
+
+</head>
+
+<body>
+<div id='map'>
+
+</div>
+
+</body>
