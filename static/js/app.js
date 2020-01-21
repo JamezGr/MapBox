@@ -1,6 +1,15 @@
-document.addEventListener("DOMContentLoaded", function(event) {
+// TODO: Read Config Data from config.json
 
-    console.log("Ready");
+// var CONFIG = require('./config.json');
+// 
+// var access_token = CONFIG.mapbox_access_token;
+// var start_location = CONFIG.start_location;
+// var end_location = CONFIG.end_location;
+
+// console.log(access_token);
+
+// wait for page to load
+document.addEventListener("DOMContentLoaded", function(event) {
 
     mapboxgl.accessToken =
   "pk.eyJ1IjoiamFtZXpnciIsImEiOiJjazVtZWJjM2QwdzBrM2VwYzBiNG5pazE5In0.T8wAj5VlDit_WoBOJL_4iA";
@@ -56,78 +65,138 @@ map.on('load', function() {
         'fill-opacity': 0.8
         }
     });
+
+    // Display Route On Map Box
+    generateRoute(map);
 });
 
-
 });
 
+// TODO: feature to get location on Map Based on Search Coordinates
 function getLocation(latitude, longitude) {
-
     console.log("Working");
-
     map[center] = [latitude, longitude];
-
 }
 
+// TODO: Generate Route from Test Locations
+function generateRoute(map) {
 
-function generateRoute() {
+    const Http = new XMLHttpRequest();
+    const url='https://api.mapbox.com/directions/v5/mapbox/driving/-2.6147890090942383%2C%2051.52931810084035%3B%20-2.526702582836151%2C%2051.47151813896309.json?access_token=' + mapboxgl.accessToken + '&geometries=geojson';
+    Http.open("GET", url);
+    Http.send();
 
-    var start = encodeURI("-2.6146, 51.5294;");
-    var end = encodeURI("-2.5267, 51.4715;");
+    Http.onreadystatechange = (e) => {
 
-    var url = 'https://api.mapbox.com/directions/v5/mapbox/driving/-2.6146%2C51.5294%3B-2.5267%2C51.4715.json?access_token=pk.eyJ1IjoiamFtZXpnciIsImEiOiJjazVtZWJjM2QwdzBrM2VwYzBiNG5pazE5In0.T8wAj5VlDit_WoBOJL_4iA';
+        var json = JSON.parse(Http.responseText);
+        var route_data = json.routes[0];
+        var coordinates_data = route_data.geometry.coordinates;
 
-    var req = new XMLHttpRequest();
-    req.open('GET', url, true);
-    req.send();
-    req.onload = function() {
+        console.log(coordinates_data);
 
-    var json = JSON.parse(req.response);
-    console.log(req);
-    var data = json.routes[0];
+        var geojson_data = {
+            type: 'Feature',
+            properties: {},
+            geometry: {
+            type: 'LineString',
+            coordinates: coordinates_data
+        }
+    }
+
+    if (map.getSource('route')) {
+      map.getSource('route').setData(geojson_data);
+    }
+
+    else {
+
+            var start_popup = new mapboxgl.Popup({ closeOnClick: false })
+                .setLngLat([-2.6147890090942383, 51.52931810084035])
+                .setHTML('<h1>Place A</h1>')
+                .addTo(map);
 
 
+            // Add Marker For Start Point
+            map.addLayer({
+            id: 'start',
+            type: 'circle',
+            source: {
+              type: 'geojson',
+              data: {
+                type: 'FeatureCollection',
+                features: [{
+                  type: 'Feature',
+                  properties: {},
+                  geometry: {
+                    type: 'Point',
+                    coordinates: [-2.6147890090942383, 51.52931810084035]
+                  }
+                }
+                ]
+              }
+            },
+            paint: {
+              'circle-radius': 10,
+              'circle-color': '#ffffff'
+            }
+          });
 
 
-  // var route = data.geometry.coordinates;
-  // var geojson = {
-  //   type: 'Feature',
-  //   properties: {},
-  //   geometry: {
-  //     type: 'LineString',
-  //     coordinates: route
-  //   }
-  // };
-  //
-  //
-  // if (map.getSource('route')) {
-  //   map.getSource('route').setData(geojson);
-  // } else {
-  //   map.addLayer({
-  //     id: 'route',
-  //     type: 'line',
-  //     source: {
-  //       type: 'geojson',
-  //       data: {
-  //         type: 'Feature',
-  //         properties: {},
-  //         geometry: {
-  //           type: 'LineString',
-  //           coordinates: geojson
-  //         }
-  //       }
-  //     },
-  //     layout: {
-  //       'line-join': 'round',
-  //       'line-cap': 'round'
-  //     },
-  //     paint: {
-  //       'line-color': '#3887be',
-  //       'line-width': 5,
-  //       'line-opacity': 0.75
-  //     }
-  //   });
-  // }
+            map.addLayer({
+            'id': 'route',
+            'type': 'line',
+            'source': {
+                'type': 'geojson',
+            'data': {
+                'type': 'Feature',
+                'geometry': {
+                    'type': 'LineString',
+                    'coordinates': geojson_data
+                }
+            }
+        },
+            'layout': {
+                'line-join': 'round',
+                'line-cap': 'round'
+            },
+            'paint': {
+                'line-color': '#3887be',
+                'line-width': 5,
+                'line-opacity': 0.75
+            }
+        });
 
-  };
+        var end_popup = new mapboxgl.Popup({ closeOnClick: false })
+        .setLngLat([-2.526702582836151, 51.47151813896309])
+        .setHTML('<h1>Place B</h1>')
+        .addTo(map);
+
+          map.addLayer({
+            id: 'end',
+            type: 'circle',
+            source: {
+              type: 'geojson',
+              data: {
+                type: 'FeatureCollection',
+                features: [{
+                  type: 'Feature',
+                  properties: {},
+                  geometry: {
+                    type: 'Point',
+                    coordinates: [-2.526702582836151, 51.47151813896309]
+                  }
+                }
+                ]
+              }
+            },
+            paint: {
+              'circle-radius': 10,
+              'circle-color': '#069fba'
+            }
+          });
+
+      }
+
+
+}
+}
 
