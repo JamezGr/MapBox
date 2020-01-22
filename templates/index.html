@@ -5,27 +5,42 @@
 Map Box - Web App
 </title>
 
-    <!-- Default Map Box CSS -->
-    <link href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
-
-    <!-- Main Styles CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-
-    <!-- Mapbox GL JS -->
-    <script src='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
-
-    <!-- Require JS -->
-    <script type="text/javascript" src="{{ url_for('static', filename='config.json') }}"></script>
-
-    <!-- Main App JS -->
-    <script type="text/javascript" src="{{ url_for('static', filename='js/app.js') }}"></script>
-
-
 </head>
 
 <body>
 <div id='map'>
+    <!-- Search Bar -->
+    <div class="search-box">
+        <div id="options-button">
+            <img class="options-icon option-button" src="{{ url_for('static', filename='img/menu.svg') }}">
+        </div>
 
+        <div class="search-bar">
+            <div class="search-text">
+                <input class="search-box" type="text" placeholder="Enter Your Location Here... ">
+            </div>
+
+            <div id="search-button">
+                <img class="search-icon option-button" src="{{ url_for('static', filename='img/search.svg') }}">
+            </div>
+
+            <div id="directions-button">
+                <img class="directions-icon option-button" src="{{ url_for('static', filename='img/directions.svg') }}">
+            </div>
+
+        </div>
+    </div>
 </div>
-
 </body>
+
+<!-- TODO: require.js for creating config -->
+
+<!-- Default Map Box CSS --> <link href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
+<!-- Main Styles CSS -->    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+<!-- Mapbox GL JS -->   <script src='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
+<!-- Main App JS -->    <script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
+<!-- jQuery JS -->      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Config JS -->      <script type="text/javascript" src="{{ url_for('static', filename='js/config/config.js') }}"></script>
+<!-- Polygon JS -->     <script type="text/javascript" src="{{ url_for('static', filename='js/polygon.js') }}"></script>
