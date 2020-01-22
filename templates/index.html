@@ -17,7 +17,7 @@ Map Box - Web App
 
         <div class="search-bar">
             <div class="search-text">
-                <input class="search-box" type="text" placeholder="Enter Your Location Here... ">
+                <input id="search-box" type="text" placeholder="Enter Your Location Here... ">
             </div>
 
             <div class="search-controls">
@@ -32,10 +32,19 @@ Map Box - Web App
                 </div>
             </div>
         </div>
-
-
     </div>
+
+    <div class="popup-warning">
+        <div id="warning-icon">
+            <img class="warning-icon" src="{{ url_for('static', filename='img/warning.svg') }}">
+        </div>
+
+        <div class="warning-message">Could not Find Search Location. Please Try Again.</div>
+    </div>
+
 </div>
+
+
 </body>
 
 <!-- TODO: require.js for creating config -->
@@ -49,3 +58,4 @@ Map Box - Web App
 
 <!-- Config JS -->      <script type="text/javascript" src="{{ url_for('static', filename='js/config/config.js') }}"></script>
 <!-- Polygon JS -->     <script type="text/javascript" src="{{ url_for('static', filename='js/polygon.js') }}"></script>
+<!-- Route JS -->     <script type="text/javascript" src="{{ url_for('static', filename='js/search.js') }}"></script>

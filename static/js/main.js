@@ -10,16 +10,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
     var end_point = config.end_location;
 
     // create new instance of map
-    var map = new mapboxgl.Map({
-        container: "map",
-        style: "mapbox://styles/mapbox/streets-v11",
-        center: center_point,
-        zoom: 15,
-    });
-
+    var map = initMap(center_point);
 
     map.on('load', function() {
-        // display Polygon over Location on Map
+        // display Polygon over Selected Location on Map
         generatePolygon(map);
 
         // display Route On Map Box
@@ -27,6 +21,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
     });
 });
 
+function initMap(center_point) {
+    var map = new mapboxgl.Map({
+        container: "map",
+        style: "mapbox://styles/mapbox/streets-v11",
+        center: center_point,
+        zoom: 15,
+    });
+
+    return map
+}
 
 // TODO: feature to get location on Map Based on Search Coordinates
 function getLocation(latitude, longitude) {
