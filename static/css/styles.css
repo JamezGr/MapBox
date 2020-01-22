@@ -63,23 +63,35 @@ input.search-box {
     margin: 5px;
 }
 
-#search-button {
-    height: 40px;
-    width: 40px;
-
-    margin-left: 540px;
+div.search-controls {
+    display: inline-block;
+    margin-left: 510px;
     margin-top: 5px;
 }
 
+#search-button {
+    display: inline-block;
+}
+
 #directions-button {
-    margin-left: 590px;
-    margin-top: -40px;
+    display: inline-block;
 }
 
 img.option-button {
     height: 30px;
     width: 30px;
+    padding-left: 15px;
+    padding-right: 10px;
 
     cursor: pointer;
     filter: invert(69%) sepia(0%) saturate(0%) hue-rotate(273deg) brightness(95%) contrast(91%);
+}
+
+div.separator {
+    display: inline-block;
+    position: absolute;
+    background-color: #a3a3a3;
+
+    height: 30px;
+    width: 4px;
 }

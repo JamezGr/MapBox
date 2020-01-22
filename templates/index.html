@@ -20,15 +20,20 @@ Map Box - Web App
                 <input class="search-box" type="text" placeholder="Enter Your Location Here... ">
             </div>
 
-            <div id="search-button">
-                <img class="search-icon option-button" src="{{ url_for('static', filename='img/search.svg') }}">
-            </div>
+            <div class="search-controls">
+                <div id="search-button">
+                    <img class="search-icon option-button" src="{{ url_for('static', filename='img/search.svg') }}">
+                </div>
 
-            <div id="directions-button">
-                <img class="directions-icon option-button" src="{{ url_for('static', filename='img/directions.svg') }}">
-            </div>
+                <div class="separator"></div>
 
+                <div id="directions-button">
+                    <img class="directions-icon option-button" src="{{ url_for('static', filename='img/directions.svg') }}">
+                </div>
+            </div>
         </div>
+
+
     </div>
 </div>
 </body>
