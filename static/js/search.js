@@ -1,26 +1,25 @@
 // wait until page has loaded
 document.addEventListener("DOMContentLoaded", function(event) {
 
-    //  test data for Map Box
-    // var search_result = "https://api.mapbox.com/geocoding/v5/mapbox.places/Los%20Angeles.json?access_token=" + mapboxgl.accessToken ;
-
-    // reset search box text every time page loads
-    function reset_search (){
-        $("#search-box").val("");
-    };
-
+    // clear search text value on page load
     reset_search();
 
     // if user has typed into search box, display clear text button
     $('#search-box').bind('input', function() {
       if ($("#search-box").val().length > 0) {
           $("#clear-text-btn").show();
+
+          setTimeout(function() {
+              console.log("test.");
+          }, 2000)
+
       }
 
       else {
           $("#clear-text-btn").hide();
       }
     });
+
 
     $('#clear-text-btn').click(function() {
         // remove text in search box
@@ -29,14 +28,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     })
 
-    $("#search-btn").click(function() {
 
+    $("#search-btn").click(function() {
         // TODO: create autocomplete function
         // Get All Place Names fom Search Data
         // For Each Place Name, create div containing location name
 
         var search_text = $("#search-box").val();
-        console.log(search_text);
+
+        // remove api request in this block
+        generateSearchResults(search_text);
 
         search_text = encodeURI(search_text);
 
@@ -78,6 +79,18 @@ document.addEventListener("DOMContentLoaded", function(event) {
                       getSearchLocation(map, geo_data);
                   });
 
+
+                  // get all possible search locations based on search text
+                  let selector = 0;
+                  let place_names = [];
+
+                  while (selector < search_data.features.length ) {
+                      place_names.push(search_data.features[selector].place_name);
+                      selector++;
+                  }
+
+                  console.log(place_names);
+
                 }
             }
         };
@@ -87,4 +100,33 @@ document.addEventListener("DOMContentLoaded", function(event) {
     $(".close-icon").click(function () {
         $(".popup-warning").fadeOut("slow");
     });
+
+    // reset search box text every time page loads
+    function reset_search (){
+        $("#search-box").val("");
+    };
+
+
+    function generateSearchResults(search_text) {
+
+      search_text = encodeURI(search_text);
+      var search_results = null;
+
+      const Http = new XMLHttpRequest();
+      const url= "https://api.mapbox.com/geocoding/v5/mapbox.places/" + search_text + ".json?access_token=" + mapboxgl.accessToken;
+      Http.open("GET", url);
+      Http.send();
+
+      Http.onreadystatechange = (e) => {
+          e.preventDefault();
+
+          var search_data = JSON.parse(Http.responseText);
+          console.log(search_data.features);
+          search_results = search_data;
+        }
+
+    return search_results
+
+    }
+
 });
