@@ -111,6 +111,7 @@ div.popup-warning {
     height: 20px;
 
     /* display: inline-block; */
+    display: none;
     position: absolute;
     z-index: 5;
 

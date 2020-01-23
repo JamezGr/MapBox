@@ -5,9 +5,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
     var config = loadConfig();
     mapboxgl.accessToken = config.mapbox_access_token;
 
+    // test data for map
     var center_point = config.center_location;
     var start_point = config.start_location;
     var end_point = config.end_location;
+
+    // TODO: ask for user's location. use center_point to Initialize Map
 
     // create new instance of map
     var map = initMap(center_point);
@@ -158,4 +161,3 @@ function generateRoute(map, start_point, end_point) {
 
 }
 }
-
