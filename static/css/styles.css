@@ -52,11 +52,11 @@ input[id=search-box] {
     padding: 5px;
     font-size: 20px;
 
-    width: 500px;
+    width: 450px;
     border: none;
 }
 
-#options-button {
+#options-btn {
     height: 40px;
     width: 40px;
 
@@ -70,7 +70,14 @@ div.search-controls {
     margin-top: 5px;
 }
 
-#search-button {
+#clear-text-btn {
+    display: none;
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 460px;
+}
+
+#search-btn {
     display: inline-block;
 }
 
@@ -78,7 +85,7 @@ div.search-controls {
     display: inline-block;
 }
 
-img.option-button {
+img.option-btn {
     height: 30px;
     width: 30px;
     padding-left: 15px;
@@ -88,6 +95,33 @@ img.option-button {
     filter: invert(69%) sepia(0%) saturate(0%) hue-rotate(273deg) brightness(95%) contrast(91%);
 }
 
+img.clear-text-icon {
+
+  height: 20px;
+  width: 20px;
+
+  padding-left: 15px;
+  padding-right: 10px;
+
+  cursor: pointer;
+  filter: invert(69%) sepia(0%) saturate(0%) hue-rotate(273deg) brightness(95%) contrast(91%);
+
+}
+
+
+img.close-icon {
+    height: 30px;
+    width: 30px;
+    padding-left: 15px;
+    padding-right: 10px;
+
+    margin-top: -20px;
+
+    cursor: pointer;
+    filter: invert(69%) sepia(0%) saturate(0%) hue-rotate(273deg) brightness(95%) contrast(91%);
+
+}
+
 div.separator {
     display: inline-block;
     position: absolute;
@@ -95,6 +129,33 @@ div.separator {
 
     height: 30px;
     width: 4px;
+}
+
+/* Auto Complete Search Results */
+div.search-results {
+    position:absolute;
+    z-index: 5;
+}
+
+div.search-result-text {
+    font-size: 16px;
+    color: #1f1f1f;
+
+    width: 680px;
+    height: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+
+    background-color: white;
+    border-top: 1px solid #ababab;
+    border-bottom: 1px solid #ababab;
+
+    cursor: pointer;
+}
+
+.search-result-text:hover {
+    background-color: #f0f0f0;
 }
 
 /* Pop Up Warning Styling */
@@ -142,7 +203,7 @@ div.warning-message {
 div.close-icon {
     display: inline-block;
     float: right;
-    margin-top: -10px;
+    margin-top: -30px;
     margin-left: 20px;
 
     cursor: pointer;

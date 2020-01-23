@@ -4,7 +4,36 @@ document.addEventListener("DOMContentLoaded", function(event) {
     //  test data for Map Box
     // var search_result = "https://api.mapbox.com/geocoding/v5/mapbox.places/Los%20Angeles.json?access_token=" + mapboxgl.accessToken ;
 
-    $("#search-button").click(function () {
+    // reset search box text every time page loads
+    function reset_search (){
+        $("#search-box").val("");
+    };
+
+    reset_search();
+
+    // if user has typed into search box, display clear text button
+    $('#search-box').bind('input', function() {
+      if ($("#search-box").val().length > 0) {
+          $("#clear-text-btn").show();
+      }
+
+      else {
+          $("#clear-text-btn").hide();
+      }
+    });
+
+    $('#clear-text-btn').click(function() {
+        // remove text in search box
+        reset_search();
+        $("#clear-text-btn").hide();
+
+    })
+
+    $("#search-btn").click(function() {
+
+        // TODO: create autocomplete function
+        // Get All Place Names fom Search Data
+        // For Each Place Name, create div containing location name
 
         var search_text = $("#search-box").val();
         console.log(search_text);

@@ -11,8 +11,8 @@ Map Box - Web App
 <div id='map'>
     <!-- Search Bar -->
     <div class="search-box">
-        <div id="options-button">
-            <img class="options-icon option-button" src="{{ url_for('static', filename='img/menu.svg') }}">
+        <div id="options-btn">
+            <img class="options-icon option-btn" src="{{ url_for('static', filename='img/menu.svg') }}">
         </div>
 
         <div class="search-bar">
@@ -20,17 +20,31 @@ Map Box - Web App
                 <input id="search-box" type="text" placeholder="Enter Your Location Here... ">
             </div>
 
+            <div id="clear-text-btn">
+                <img class="clear-text-icon" src="{{ url_for('static', filename='img/close.svg') }}">
+            </div>
+
+
             <div class="search-controls">
-                <div id="search-button">
-                    <img class="search-icon option-button" src="{{ url_for('static', filename='img/search.svg') }}">
+                <div id="search-btn">
+                    <img class="search-icon option-btn" src="{{ url_for('static', filename='img/search.svg') }}">
                 </div>
 
                 <div class="separator"></div>
 
                 <div id="directions-button">
-                    <img class="directions-icon option-button" src="{{ url_for('static', filename='img/directions.svg') }}">
+                    <img class="directions-icon option-btn" src="{{ url_for('static', filename='img/directions.svg') }}">
                 </div>
             </div>
+        </div>
+
+        <div class="search-results" style="display: none;">
+            <div class="search-result-text">Test Location</div>
+            <div class="search-result-text">Test Location</div>
+            <div class="search-result-text">Test Location</div>
+            <div class="search-result-text">Test Location</div>
+            <div class="search-result-text">Test Location</div>
+
         </div>
     </div>
 
