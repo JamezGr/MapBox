@@ -23,8 +23,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
             if ("features" in search_data) {
                 if (search_data.features.length == 0) {
+                  // debugging purposes
                   console.log("Location Could Not Be Found. Please Try Again.");
 
+                  // display invalid search location pop up
                   $(".popup-warning").attr("style", "display: block;")
                 }
 
@@ -32,15 +34,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
                   var center_data = search_data.features[0].center;
                   var center_points = [center_data[0], center_data[1]];
 
-                  // debugging purposes
-                  console.log(center_points);
-                  console.log(search_data);
-
                   initMap(center_points);
                 }
             }
         };
     })
+
+    // close invalid location pop up
+    $(".close-icon").click(function () {
+        $(".popup-warning").fadeOut("slow");
+    });
 
 
 });
