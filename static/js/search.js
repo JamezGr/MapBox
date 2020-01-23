@@ -1,3 +1,4 @@
+// wait until page has loaded
 document.addEventListener("DOMContentLoaded", function(event) {
 
     //  test data for Map Box
@@ -27,14 +28,27 @@ document.addEventListener("DOMContentLoaded", function(event) {
                   console.log("Location Could Not Be Found. Please Try Again.");
 
                   // display invalid search location pop up
-                  $(".popup-warning").attr("style", "display: block;")
+                  $(".popup-warning").attr("style", "display: block;");
                 }
 
                 else {
+
+                  // get coordinates of search location
                   var center_data = search_data.features[0].center;
                   var center_points = [center_data[0], center_data[1]];
+                  var coordinates = center_data[0] + ", " + center_data[1];
 
-                  initMap(center_points);
+                  var location =  search_data.features[0].text;
+                  var full_location = search_data.features[0].place_name;
+
+                  const geo_data = [center_points, location, full_location, coordinates];
+
+                  var map = initMap(geo_data[0]);
+
+                  map.on('style.load', function () {
+                      getSearchLocation(map, geo_data);
+                  });
+
                 }
             }
         };
@@ -44,6 +58,4 @@ document.addEventListener("DOMContentLoaded", function(event) {
     $(".close-icon").click(function () {
         $(".popup-warning").fadeOut("slow");
     });
-
-
 });

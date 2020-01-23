@@ -1,4 +1,3 @@
-// TODO: create Initialize Map Function
 
 // wait for page to load
 document.addEventListener("DOMContentLoaded", function(event) {
@@ -9,8 +8,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
     var center_point = config.center_location;
     var start_point = config.start_location;
     var end_point = config.end_location;
-
-    // TODO: ask for user's location. use center_point to Initialize Map
 
     // create new instance of map
     var map = initMap(center_point);
@@ -24,6 +21,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     });
 });
 
+// initialize map
 function initMap(center_point) {
     var map = new mapboxgl.Map({
         container: "map",
@@ -35,12 +33,50 @@ function initMap(center_point) {
     return map
 }
 
-// TODO: feature to get location on Map Based on Search Coordinates
-function getLocation(latitude, longitude) {
-    console.log("Coordinates are " + [latitude, longitude]);
+// display marker for a location on Map Based on Search Query
+function getSearchLocation(map, geo_data) {
+  
+    // hide warning pop up if search location is valid
+    $(".popup-warning").attr("style", "display: none;");
+
+    // FOR REFERENCE:
+    // geodata[0] = search coordinates
+    // geodata[1] = location
+    // geodata[2] = full location name / address
+    // geodata[3] = coordinates
+
+    // create Marker on Map
+    map.addLayer({
+    id: 'start',
+    type: 'circle',
+    source: {
+      type: 'geojson',
+      data: {
+        type: 'FeatureCollection',
+        features: [{
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'Point',
+            coordinates: geo_data[0]
+          }
+        }
+        ]
+      }
+    },
+    paint: {
+      'circle-radius': 20,
+      'circle-color': '#eb4034'
+    }
+  });
+
+  var location_popup = new mapboxgl.Popup({ closeOnClick: false })
+  .setLngLat(geo_data[0])
+  .setHTML('<h1>' + geo_data[1] + '</h1><p>' + geo_data[2] + '</p><p>' + geo_data[3] + '</p>')
+  .addTo(map);
 }
 
-// TODO: Generate Route from Test Locations
+// generate route from Test Locations
 function generateRoute(map, start_point, end_point) {
 
     const Http = new XMLHttpRequest();
