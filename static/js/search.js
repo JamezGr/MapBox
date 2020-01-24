@@ -6,17 +6,54 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
     // if user has typed into search box, display clear text button
     $('#search-box').bind('input', function() {
+
+      // empty previous search results if they exist
+      $(".search-results").empty();
+
+      // if user has typed into search box
       if ($("#search-box").val().length > 0) {
           $("#clear-text-btn").show();
 
           setTimeout(function() {
-              console.log("test.");
-          }, 2000)
 
-      }
+            var search_text = $("#search-box").val();
+
+            // remove api request in this block
+            search_text = encodeURI(search_text);
+
+            const Http = new XMLHttpRequest();
+            const url= "https://api.mapbox.com/geocoding/v5/mapbox.places/" + search_text + ".json?access_token=" + mapboxgl.accessToken;
+            Http.open("GET", url);
+            Http.send();
+
+            Http.onreadystatechange = (e) => {
+                e.preventDefault();
+
+                var search_data = JSON.parse(Http.responseText);
+
+                if ("features" in search_data) {
+                    if (search_data.features.length == 0) {
+
+                      // display invalid search location pop up
+                      $(".popup-warning").attr("style", "display: block;");
+                    }
+
+                    else {
+                        autocompleteResults(search_data);
+                    }
+                  }
+              // Debugging Purposes
+              console.log("Typing...");
+          }
+      }, 2000)
+    }
 
       else {
+          // hide clear text button as there is no search query
           $("#clear-text-btn").hide();
+
+          // remove search results for empty query
+          $(".search-results").empty();
       }
     });
 
@@ -25,6 +62,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         // remove text in search box
         reset_search();
         $("#clear-text-btn").hide();
+        $(".search-results").hide();
 
     })
 
@@ -33,12 +71,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
         // TODO: create autocomplete function
         // Get All Place Names fom Search Data
         // For Each Place Name, create div containing location name
+        $(".search-results").hide();
 
         var search_text = $("#search-box").val();
 
         // remove api request in this block
-        generateSearchResults(search_text);
-
         search_text = encodeURI(search_text);
 
         const Http = new XMLHttpRequest();
@@ -78,19 +115,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
                   map.on('style.load', function () {
                       getSearchLocation(map, geo_data);
                   });
-
-
-                  // get all possible search locations based on search text
-                  let selector = 0;
-                  let place_names = [];
-
-                  while (selector < search_data.features.length ) {
-                      place_names.push(search_data.features[selector].place_name);
-                      selector++;
-                  }
-
-                  console.log(place_names);
-
                 }
             }
         };
@@ -107,25 +131,28 @@ document.addEventListener("DOMContentLoaded", function(event) {
     };
 
 
-    function generateSearchResults(search_text) {
+    function autocompleteResults(search_data) {
 
-      search_text = encodeURI(search_text);
-      var search_results = null;
+      // get all possible search locations based on search text
+      let selector = 0;
+      let place_names = [];
 
-      const Http = new XMLHttpRequest();
-      const url= "https://api.mapbox.com/geocoding/v5/mapbox.places/" + search_text + ".json?access_token=" + mapboxgl.accessToken;
-      Http.open("GET", url);
-      Http.send();
+      while (selector < search_data.features.length ) {
+          place_names.push(search_data.features[selector].place_name);
+          selector++;
+      }
 
-      Http.onreadystatechange = (e) => {
-          e.preventDefault();
+      console.log(place_names);
 
-          var search_data = JSON.parse(Http.responseText);
-          console.log(search_data.features);
-          search_results = search_data;
-        }
+      let search_result = 0
 
-    return search_results
+      place_names.forEach(function(search_result) {
+          $(".search-results").append('<div class="search-result-text">' + search_result + '</div>');
+          search_result++;
+          console.log("added.");
+      })
+
+      $(".search-results").attr("style", "display: block;");
 
     }
 
