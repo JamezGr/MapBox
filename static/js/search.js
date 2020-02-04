@@ -39,13 +39,16 @@ document.addEventListener("DOMContentLoaded", function(event) {
                     }
 
                     else {
+                      setTimeout(function() {
                         autocompleteResults(search_data);
+                      }, 1000);
+
                     }
                   }
               // Debugging Purposes
               console.log("Typing...");
           }
-      }, 2000)
+      }, 500)
     }
 
       else {
@@ -137,23 +140,32 @@ document.addEventListener("DOMContentLoaded", function(event) {
       let selector = 0;
       let place_names = [];
 
+      // reset all search results
+      $(".search-results").empty();
+
+
+      console.log(search_data.features.length);
+
       while (selector < search_data.features.length ) {
           place_names.push(search_data.features[selector].place_name);
           selector++;
       }
 
-      console.log(place_names);
+      // only show five search results
+      let filtered_results = place_names.slice(0, 5);
+      console.log(filtered_results);
 
-      let search_result = 0
-
-      place_names.forEach(function(search_result) {
+      filtered_results.forEach(function(search_result) {
           $(".search-results").append('<div class="search-result-text">' + search_result + '</div>');
-          search_result++;
-          console.log("added.");
-      })
+      });
+
+
+      if ($(".search-result-text").length > 5) {
+        console.log("More Than 5 Results");
+      }
+
 
       $(".search-results").attr("style", "display: block;");
-
-    }
+      }
 
 });
