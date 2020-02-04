@@ -38,6 +38,19 @@ Map Box - Web App
             </div>
         </div>
 
+        <div id="directions-pop-up">
+          <img class="close-directions" src="{{ url_for('static', filename='img/close.svg') }}">
+            <div class ="directions-container">
+              <img class="direction-icon" src="{{ url_for('static', filename='img/empty-circle.svg') }}">
+              <input id="directions-search-box" type="text" placeholder="Choose Your Starting Point... ">
+
+              <br>
+
+              <img class="direction-icon" src="{{ url_for('static', filename='img/filled-circle.svg') }}">
+              <input id="directions-search-box" type="text" placeholder="Choose Your Destination... ">
+            </div>
+        </div>
+
         <div class="search-results">
 
         </div>

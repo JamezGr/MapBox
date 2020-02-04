@@ -160,6 +160,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
       // show search results on screen
       $(".search-results").attr("style", "display: block;");
+
       }
 
       $(".search-results").click(function() {

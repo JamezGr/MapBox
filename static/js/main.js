@@ -1,6 +1,14 @@
 
 // wait for page to load
 document.addEventListener("DOMContentLoaded", function(event) {
+    // let reader = new FileReader();
+    // var directions_panel = reader.readAsText('templates/widgets/getDirections/directions.html');
+    //
+    // reader.onload = function() {
+    //   console.log(reader.result);
+    // }
+
+
     var config = loadConfig();
     mapboxgl.accessToken = config.mapbox_access_token;
 
