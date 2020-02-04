@@ -35,7 +35,7 @@ function initMap(center_point) {
 
 // display marker for a location on Map Based on Search Query
 function getSearchLocation(map, geo_data) {
-  
+
     // hide warning pop up if search location is valid
     $(".popup-warning").attr("style", "display: none;");
 
@@ -193,7 +193,14 @@ function generateRoute(map, start_point, end_point) {
           });
 
       }
-
-
+    }
 }
-}
+
+function autoSearch(text_value){
+  // change search box value to search result clicked
+  $("#search-box").val(text_value.innerHTML);
+
+  // hide search results after result selected
+  $(".search-results").attr("style", "display: none;");
+  $('#search-btn').trigger('click');
+};

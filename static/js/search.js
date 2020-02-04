@@ -133,12 +133,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
         $("#search-box").val("");
     };
 
-
     function autocompleteResults(search_data) {
 
       // get all possible search locations based on search text
       let selector = 0;
       let place_names = [];
+
 
       // reset all search results
       $(".search-results").empty();
@@ -153,19 +153,17 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
       // only show five search results
       let filtered_results = place_names.slice(0, 5);
-      console.log(filtered_results);
 
       filtered_results.forEach(function(search_result) {
-          $(".search-results").append('<div class="search-result-text">' + search_result + '</div>');
+          $(".search-results").append('<div class="search-result-text" onclick="autoSearch(this)">' + search_result + '</div>');
       });
 
-
-      if ($(".search-result-text").length > 5) {
-        console.log("More Than 5 Results");
-      }
-
-
+      // show search results on screen
       $(".search-results").attr("style", "display: block;");
       }
+
+      $(".search-results").click(function() {
+          let selected_text = $(this).find(".search-result-text").text();
+      });
 
 });
